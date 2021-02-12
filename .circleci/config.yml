@@ -15,27 +15,37 @@ parameters:
     type: string
     # during active development of this orb, the default version below should be: "dev:alpha"
     #default: "dev:alpha"
-    default: "0.0.26"
+    default: "0"
 
 jobs:
-  job-nancy-scan:
+  job-nancy-scan-latest:
     executor: circleci-nancy-orb/golang-executor
     steps:
       - checkout
       - circleci-nancy-orb/install-nancy
       - circleci-nancy-orb/run-nancy
 
+  job-nancy-scan-specific-version:
+    executor: circleci-nancy-orb/golang-executor
+    steps:
+      - checkout
+      - circleci-nancy-orb/install-nancy:
+          nancy-version: "v1.0.14"
+      - circleci-nancy-orb/run-nancy
+
 workflows:
   main:
     jobs:
-      - job-nancy-scan
+      - job-nancy-scan-latest
+      - job-nancy-scan-specific-version
 
   build_nightly:
     triggers:
       - schedule:
-          cron: "20 20 * * *"
+          cron: "15 20 * * *"
           filters:
             branches:
               only: master
     jobs:
-      - job-nancy-scan
+      - job-nancy-scan-latest
+      - job-nancy-scan-specific-version
