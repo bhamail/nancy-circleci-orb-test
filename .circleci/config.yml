@@ -8,7 +8,7 @@
 version: 2.1
 orbs:
   # during active development of the orb, the version below should be: "dev:alpha"
-  circleci-nancy-orb: sonatype-nexus-community/circleci-nancy-orb@dev:big_simplify
+  circleci-nancy-orb: sonatype-nexus-community/circleci-nancy-orb@dev:alpha
 
 jobs:
   job-nancy-scan-latest:
