@@ -7,7 +7,7 @@
 #  Eclipse Foundation. All other trademarks are the property of their respective owners.
 version: 2.1
 orbs:
-  # during active development of the orb, the version below should be: "dev:alpha"
+  # during active development of the orb, the version below should be: "@dev:alpha"
   nancy: sonatype-nexus-community/circleci-nancy-orb@0
 
 jobs:
