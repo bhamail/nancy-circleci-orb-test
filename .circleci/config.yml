@@ -8,29 +8,39 @@
 version: 2.1
 orbs:
   # during active development of the orb, the version below should be: "dev:alpha"
-  circleci-nancy-orb: sonatype-nexus-community/circleci-nancy-orb@0
+  nancy: sonatype-nexus-community/circleci-nancy-orb@0
 
 jobs:
   job-nancy-scan-latest:
-    executor: circleci-nancy-orb/golang-executor
+    executor: nancy/golang-executor
     steps:
       - checkout
-      - circleci-nancy-orb/install-nancy
-      - circleci-nancy-orb/run-nancy
+      - nancy/install-nancy
+      - nancy/run-nancy
 
   job-nancy-scan-specific-version:
-    executor: circleci-nancy-orb/golang-executor
+    executor: nancy/golang-executor
     steps:
       - checkout
-      - circleci-nancy-orb/install-nancy:
+      - nancy/install-nancy:
           nancy-version: "v1.0.14"
-      - circleci-nancy-orb/run-nancy
+      - nancy/run-nancy
+
+  job-nancy-scan-executor-tag:
+    executor:
+      name: nancy/golang-executor
+      tag: "1.15"
+    steps:
+      - checkout
+      - nancy/install-nancy
+      - nancy/run-nancy
 
 workflows:
   main:
     jobs:
       - job-nancy-scan-latest
       - job-nancy-scan-specific-version
+      - job-nancy-scan-executor-tag
 
   build_nightly:
     triggers:
@@ -42,3 +52,4 @@ workflows:
     jobs:
       - job-nancy-scan-latest
       - job-nancy-scan-specific-version
+      - job-nancy-scan-executor-tag
