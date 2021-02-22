@@ -48,7 +48,7 @@ workflows:
           cron: "15 20 * * *"
           filters:
             branches:
-              only: master
+              only: main
     jobs:
       - job-nancy-scan-latest
       - job-nancy-scan-specific-version
