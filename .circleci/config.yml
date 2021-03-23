@@ -10,6 +10,18 @@ orbs:
   # during active development of the orb, the version below should be: "@dev:alpha"
   nancy: sonatype-nexus-community/circleci-nancy-orb@0
 
+executors:
+  go:
+    docker:
+      - image: circleci/golang:1.13
+
+commands:
+  cmd-nancy:
+    description: "Run nancy to check for go vulnerabilities."
+    steps:
+      - nancy/install-nancy
+      - nancy/run-nancy
+
 jobs:
   job-nancy-scan-latest:
     executor: nancy/golang-executor
@@ -35,12 +47,20 @@ jobs:
       - nancy/install-nancy
       - nancy/run-nancy
 
+  build:
+    executor: go
+    steps:
+      - checkout
+      - run: "echo 'running regular build stuff here'"
+      - cmd-nancy
+
 workflows:
   main:
     jobs:
       - job-nancy-scan-latest
       - job-nancy-scan-specific-version
       - job-nancy-scan-executor-tag
+      - build
 
   build_nightly:
     triggers:
