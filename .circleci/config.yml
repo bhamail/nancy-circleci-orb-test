@@ -57,10 +57,14 @@ jobs:
 workflows:
   main:
     jobs:
-      - job-nancy-scan-latest
-      - job-nancy-scan-specific-version
-      - job-nancy-scan-executor-tag
-      - build
+      - job-nancy-scan-latest:
+          context: scan_ossi
+      - job-nancy-scan-specific-version:
+          context: scan_ossi
+      - job-nancy-scan-executor-tag:
+          context: scan_ossi
+      - build:
+          context: scan_ossi
 
   build_nightly:
     triggers:
@@ -70,6 +74,9 @@ workflows:
             branches:
               only: main
     jobs:
-      - job-nancy-scan-latest
-      - job-nancy-scan-specific-version
-      - job-nancy-scan-executor-tag
+      - job-nancy-scan-latest:
+          context: scan_ossi
+      - job-nancy-scan-specific-version:
+          context: scan_ossi
+      - job-nancy-scan-executor-tag:
+          context: scan_ossi
