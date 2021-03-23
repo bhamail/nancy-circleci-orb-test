@@ -13,7 +13,7 @@ orbs:
 executors:
   go:
     docker:
-      - image: circleci/golang:1.13
+      - image: circleci/golang:1.16
 
 commands:
   cmd-nancy:
