@@ -7,4 +7,3 @@ Runs the [circleci-nancy-orb](https://github.com/sonatype-nexus-community/circle
 
 ToDo
 ----
-
